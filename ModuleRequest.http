@@ -1,0 +1,11 @@
+### WEB Module의 루트 경로 호출
+GET http://localhost:8080
+
+### WEB Module의 member 경로 호출
+GET http://localhost:8080/member
+
+### ADMIN Module의 루트 경로 호출
+GET http://localhost:8081
+
+### ADMIN Module의 member 경로 호출
+GET http://localhost:8081/member

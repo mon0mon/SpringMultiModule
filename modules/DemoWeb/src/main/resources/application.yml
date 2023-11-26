@@ -1,0 +1,3 @@
+# DemoWeb application.yml
+server:
+  port: 8080

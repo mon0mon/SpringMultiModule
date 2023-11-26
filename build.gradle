@@ -1,0 +1,75 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility 17
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+//  모듈 공통 설정
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+    }
+
+    //  모듈들이 가지는 공통 의존성
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+
+    //  모듈들은 공통적으로 JUnitPlatform을 테스트로 사용
+    test {
+        useJUnitPlatform()
+    }
+}
+
+//  /modules/DemoCommon 모듈의 개별 설정
+project('modules:DemoCommon') {
+    //  BootJar 빌드 X
+    bootJar.enabled = false
+    //  Jar 빌드 O
+    jar.enabled = true
+
+    dependencies {}
+}
+
+//  /modules/DemoWeb 모듈의 개별 설정
+project('modules:DemoWeb') {
+    dependencies {
+        compileOnly project(':modules:DemoCommon')
+    }
+}
+
+//  /modules/DemoAdmin 모듈의 개별 설정
+project('modules:DemoAdmin') {
+    dependencies {
+        compileOnly project(':modules:DemoCommon')
+    }
+}

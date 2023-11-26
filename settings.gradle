@@ -1,0 +1,4 @@
+rootProject.name = 'SpringBootMultiModule'
+include 'modules:DemoWeb'
+include 'modules:DemoAdmin'
+include 'modules:DemoCommon'
